@@ -1,0 +1,36 @@
+USE CRUD
+GO
+
+-- sp_ConsultarInventario @pFechaInicio='16/06/2020',@pFechaFin='20/06/2020',@pTipoMovimiento='',@pNroDocumento='65416'
+
+CREATE PROCEDURE sp_ConsultarInventario (
+	 @pFechaInicio		varchar(10) = ''
+	,@pFechaFin			varchar(10) = ''
+	,@pTipoMovimiento	varchar(50) = ''
+	,@pNroDocumento		varchar(50) = ''
+) 
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	SELECT 
+		  ISNULL(COMPANIA_VENTA_3, '') COMPANIA_VENTA_3
+		, ISNULL(ALMACEN_VENTA, '')	ALMACEN_VENTA
+		, ISNULL(TIPO_MOVIMIENTO, '') TIPO_MOVIMIENTO
+		, ISNULL(TIPO_DOCUMENTO, '') TIPO_DOCUMENTO
+		, ISNULL(NRO_DOCUMENTO, '') NRO_DOCUMENTO
+		, ISNULL(COD_ITEM_2, '') COD_ITEM_2
+		, ISNULL(CANTIDAD, '') CANTIDAD
+		, ISNULL(COMPANIA_DESTINO, '') COMPANIA_DESTINO
+		, LEFT(ISNULL(FECHA_TRANSACCION, ''), 10) FECHA_TRANSACCION
+	FROM MOV_INVENTARIO
+	WHERE 
+	--( CONVERT(DATETIME,FECHA_TRANSACCION, 103) BETWEEN CONVERT(DATETIME,@pFechaInicio, 103) AND CONVERT(DATETIME,@pFechaFin,103) )
+	( @pFechaInicio = '' OR CONVERT(DATETIME, FECHA_TRANSACCION, 103) >= CONVERT(DATETIME, @pFechaInicio, 103) )
+    AND 
+	( @pFechaFin = '' OR CONVERT(DATETIME, FECHA_TRANSACCION, 103) <= CONVERT(DATETIME, @pFechaFin, 103) )
+	AND ( @pTipoMovimiento = '' OR TIPO_MOVIMIENTO = @pTipoMovimiento )
+	AND ( @pNroDocumento = '' OR NRO_DOCUMENTO = @pNroDocumento )
+
+END

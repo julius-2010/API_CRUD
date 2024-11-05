@@ -1,0 +1,47 @@
+USE CRUD
+GO
+
+/* 
+		sp_InsertarMovimiento 
+		@COD_CIA = '0',
+		@COMPANIA_VENTA_3 = '1',
+		@ALMACEN_VENTA = 'HU',
+		@TIPO_MOVIMIENTO = 'SD',
+		@TIPO_DOCUMENTO = 'MO',
+		@NRO_DOCUMENTO = '66028',
+		@COD_ITEM_2 = '544001'
+*/
+
+CREATE PROCEDURE sp_InsertarMovimiento (
+	@COD_CIA varchar(50) ,
+	@COMPANIA_VENTA_3 varchar(50) ,
+	@ALMACEN_VENTA varchar(50) ,
+	@TIPO_MOVIMIENTO varchar(50) ,
+	@TIPO_DOCUMENTO varchar(50) ,
+	@NRO_DOCUMENTO varchar(50) ,
+	@COD_ITEM_2 varchar(50) 
+) 
+AS
+BEGIN
+
+	
+	INSERT INTO MOV_INVENTARIO (
+		COD_CIA,
+		COMPANIA_VENTA_3,
+		ALMACEN_VENTA ,
+		TIPO_MOVIMIENTO ,
+		TIPO_DOCUMENTO ,
+		NRO_DOCUMENTO ,
+		COD_ITEM_2 
+	) 
+	VALUES (
+		@COD_CIA,
+		@COMPANIA_VENTA_3,
+		@ALMACEN_VENTA ,
+		@TIPO_MOVIMIENTO ,
+		@TIPO_DOCUMENTO ,
+		@NRO_DOCUMENTO ,
+		@COD_ITEM_2
+	)
+
+END
